@@ -10,7 +10,7 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:
-    url('images3.jpg') left center no-repeat,
+    url('images (1).jpg') left center no-repeat,
     url('images4.jpg') right center no-repeat;
   background-size:25% 100%,25% 100%;
 }
@@ -32,7 +32,7 @@ body{
   height:180px;
   overflow:hidden;
   border-radius:15px;
-  margin-bottom:15px;
+  margin-bottom:10px;
 }
 .slide{
   position:absolute;
@@ -44,17 +44,43 @@ body{
 .slide img{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain; /* الصور تظهر كاملة */
+  background-color:#fff;
 }
 .slide.active{
   opacity:1;
 }
 
-/* TITLE */
-h1{
-  text-align:center;
-  margin-bottom:5px;
+/* الأسهم داخل السلايدر */
+.slider button.prev,
+.slider button.next{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(52,152,219,0.7);
+  color:white;
+  border:none;
+  padding:10px 15px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:18px;
+  z-index:10;
 }
+
+.slider button.prev{
+  left:10px;
+}
+
+.slider button.next{
+  right:10px;
+}
+
+.slider button.prev:hover,
+.slider button.next:hover{
+  background:rgba(52,152,219,1);
+}
+
+/* TEXT */
 .welcome{
   text-align:center;
   color:#555;
@@ -81,9 +107,6 @@ iframe{
   background:#f4f9ff;
   border-radius:10px;
 }
-.info h3{
-  margin-top:0;
-}
 #coverageMsg{
   font-size:15px;
   line-height:1.6;
@@ -93,14 +116,14 @@ iframe{
 .tooltip{
   position:absolute;
   bottom:20px;
-  right:20px;
-  font-size:26px;
+  right:30px;
+  font-size:15px;
   cursor:pointer;
 }
 .tooltip span{
   visibility:hidden;
-  background:#fbfbfa;
-  color:rgb(11, 10, 10);
+  background:#090907;
+  color:#f4f4f4;
   padding:10px;
   border-radius:10px;
   width:600px;
@@ -132,13 +155,15 @@ iframe{
 <div class="container">
 
   <!-- SLIDER -->
-  <div class="slider">
-    <div class="slide active"><img src="WhatsApp Image 1.jpeg"></div>
-    <div class="slide"><img src="WhatsApp Image 2.jpeg"></div>
-    <div class="slide"><img src="WhatsApp Image 3.jpeg"></div>
-  </div>
+  <div class="slider" id="slider">
+    <div class="slide active"><img src="WhatsApp Image 11.jpeg"></div>
+    <div class="slide"><img src="WhatsApp Image 22.jpeg"></div>
+    <div class="slide"><img src="WhatsApp Image 33.jpeg"></div>
 
-  <h1>📡 مرحبا بيك في خدمة التغطية</h1>
+    <!-- الأسهم داخل السلايدر -->
+    <button class="prev" onclick="prevSlide()">⏮</button>
+    <button class="next" onclick="nextSlide()">⏭</button>
+  </div>
 
   <p class="welcome">
     اختار الموقع متاعك من الخريطة و اطّلع على جودة التغطية المتوفرة في المكان.
@@ -149,7 +174,7 @@ iframe{
     <iframe src="https://geo.tunisietelecom.tn/mytaghtia/"></iframe>
   </div>
 
-  <!-- COVERAGE INFO -->
+  <!-- INFO -->
   <div class="info">
     <p id="coverageMsg">
       الرجاء اختيار موقع من الخريطة لعرض معلومات التغطية.
@@ -159,38 +184,67 @@ iframe{
   <!-- TOOLTIP -->
   <div class="tooltip">❓
     <span>
-    <p> Dans le cadre de ma formation universitaire en Développement des Systèmes d’Information (DSI), j’ai effectué un stage de perfectionnement d’une durée d’un mois au sein de l’entreprise Tunisie Télécom.
-Ce stage avait pour objectif de me permettre de découvrir le milieu professionnel et de mettre en pratique les connaissances théoriques acquises durant mon parcours universitaire. Durant cette période, j’ai participé au développement d’un projet informatique lié aux services de Tunisie Télécom, portant principalement sur la consultation de la couverture réseau à travers une application web interactive.
-Le projet réalisé consiste à concevoir une plateforme permettant à l’utilisateur de vérifier la disponibilité de la couverture réseau selon sa position géographique, en s’appuyant sur les technologies de cartographie et les données du système d’information géographique (SIG). Ce projet m’a permis de mieux comprendre l’importance des systèmes d’information dans la gestion des réseaux de télécommunications et l’amélioration des services offerts aux clients.</p>
+      <p>
+      Dans le cadre de ma formation universitaire en Développement des Systèmes d’Information (DSI), j’ai effectué un stage de perfectionnement d’une durée d’un mois au sein de l’entreprise Tunisie Télécom.
+      Ce stage avait pour objectif de me permettre de découvrir le milieu professionnel et de mettre en pratique les connaissances théoriques acquises durant mon parcours universitaire.
+      Durant cette période, j’ai participé au développement d’un projet informatique lié aux services de Tunisie Télécom, portant principalement sur la consultation de la couverture réseau à travers une application web interactive.
+      Le projet réalisé consiste à concevoir une plateforme permettant à l’utilisateur de vérifier la disponibilité de la couverture réseau selon sa position géographique, en s’appuyant sur les technologies de cartographie et les données du système d’information géographique (SIG).
+      </p>
     </span>
   </div>
 
 </div>
 
 <button class="retour" onclick="window.location.href='index.html'">⬅️ Retour</button>
+
 <script>
 /* SLIDER */
-let slides=document.querySelectorAll('.slide');
-let i=0;
-setInterval(()=>{
-  slides[i].classList.remove('active');
-  i=(i+1)%slides.length;
-  slides[i].classList.add('active');
-},3000);
+let slides = document.querySelectorAll('.slide');
+let slider = document.getElementById('slider');
+let i = 0;
+let sliderInterval;
 
-/* LOCATION BASED COVERAGE */
+function showSlide(index){
+  slides.forEach(slide => slide.classList.remove('active'));
+  slides[index].classList.add('active');
+}
+
+function nextSlide(){
+  i = (i + 1) % slides.length;
+  showSlide(i);
+}
+
+function prevSlide(){
+  i = (i - 1 + slides.length) % slides.length;
+  showSlide(i);
+}
+
+function startSlider(){
+  sliderInterval = setInterval(nextSlide,3000);
+}
+
+function stopSlider(){
+  clearInterval(sliderInterval);
+}
+
+/* تشغيل تلقائي */
+startSlider();
+
+/* إيقاف عند hover */
+slider.addEventListener("mouseenter", stopSlider);
+slider.addEventListener("mouseleave", startSlider);
+
+/* LOCATION (كما هو) */
 if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(pos=>{
-    let lat = pos.coords.latitude;
-    let lng = pos.coords.longitude;
-    let msg = "";
-
-    document.getElementById("coverageMsg").innerText = msg;
-  },
-  ()=>{
-    document.getElementById("coverageMsg").innerText =
-      "⚠️ لم يتم تحديد الموقع. الرجاء السماح بالوصول للموقع.";
-  });
+  navigator.geolocation.getCurrentPosition(
+    ()=>{
+      document.getElementById("coverageMsg").innerText = "";
+    },
+    ()=>{
+      document.getElementById("coverageMsg").innerText =
+        "⚠️ لم يتم تحديد الموقع. الرجاء السماح بالوصول للموقع.";
+    }
+  );
 }else{
   document.getElementById("coverageMsg").innerText =
     "❌ المتصفح لا يدعم تحديد الموقع.";
