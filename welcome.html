@@ -1,218 +1,199 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>تغطية الشبكة</title>
+<title>خدمة التغطية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-   background:url('images1t.jpg') no-repeat center center fixed;
-    background-size:cover;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:
+    url('images3.jpg') left center no-repeat,
+    url('images4.jpg') right center no-repeat;
+  background-size:25% 100%,25% 100%;
 }
 
-.container {
-  max-width: 950px;
-  margin: 20px auto;
-  background: white;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+/* CONTAINER */
+.container{
+  max-width:950px;
+  margin:25px auto;
+  background:rgba(255,255,255,.95);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  position:relative;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 26px;
+/* SLIDER */
+.slider{
+  position:relative;
+  height:180px;
+  overflow:hidden;
+  border-radius:15px;
+  margin-bottom:15px;
+}
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  opacity:0;
+  transition:opacity 1s;
+}
+.slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.slide.active{
+  opacity:1;
 }
 
-p.welcome {
-  text-align: center;
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 20px;
+/* TITLE */
+h1{
+  text-align:center;
+  margin-bottom:5px;
+}
+.welcome{
+  text-align:center;
+  color:#555;
+  margin-bottom:20px;
 }
 
-.map-box {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  border-radius: 12px;
-  overflow: hidden;
+/* MAP */
+.map-box{
+  height:420px;
+  border-radius:12px;
+  overflow:hidden;
+}
+iframe{
+  width:100%;
+  height:100%;
+  border:none;
 }
 
-.controls {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255,255,255,0.95);
-  padding: 10px 15px;
-  border-radius: 12px;
-  display: flex;
-  gap: 10px;
-  z-index: 10;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+/* INFO */
+.info{
+  margin-top:20px;
+  padding:15px;
+  border-left:6px solid #3498db;
+  background:#f4f9ff;
+  border-radius:10px;
+}
+.info h3{
+  margin-top:0;
+}
+#coverageMsg{
+  font-size:15px;
+  line-height:1.6;
 }
 
-select, button {
-  padding: 6px 10px;
-  font-size: 13px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+/* TOOLTIP */
+.tooltip{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  font-size:26px;
+  cursor:pointer;
+}
+.tooltip span{
+  visibility:hidden;
+  background:#fbfbfa;
+  color:rgb(11, 10, 10);
+  padding:10px;
+  border-radius:10px;
+  width:600px;
+  position:absolute;
+  right:0;
+  bottom:130%;
+}
+.tooltip:hover span{
+  visibility:visible;
 }
 
-button {
-  cursor: pointer;
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
-  border: none;
-}
-
-button.location-btn {
-  background: linear-gradient(135deg,#2ecc71,#27ae60);
-}
-
-/* زر Retour ثابت أسفل اليسار */
-button.retour {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: linear-gradient(135deg,#e74c3c,#c0392b);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 12px 20px;
-  cursor: pointer;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  z-index:1000;
-}
-
-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
+/* RETOUR */
+.retour{
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  background:#e74c3c;
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:50px;
+  cursor:pointer;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
-     <!-- Logos -->
-    <div class="logos">
-        <img src="images.jpg" alt="ISET Kebili" style="width: 100;height: 50px;">
+
+  <!-- SLIDER -->
+  <div class="slider">
+    <div class="slide active"><img src="WhatsApp Image 1.jpeg"></div>
+    <div class="slide"><img src="WhatsApp Image 2.jpeg"></div>
+    <div class="slide"><img src="WhatsApp Image 3.jpeg"></div>
+  </div>
 
   <h1>📡 مرحبا بيك في خدمة التغطية</h1>
-  <p class="welcome">اختار الولاية والمعتمدية و اعرف التغطية الخاصة بالمكان مباشرة، أو اضغط "حدد موقعي".</p>
 
+  <p class="welcome">
+    اختار الموقع متاعك من الخريطة و اطّلع على جودة التغطية المتوفرة في المكان.
+  </p>
+
+  <!-- MAP -->
   <div class="map-box">
-    <div class="controls">
-      <select id="gouvernorat" onchange="updateDelegations()">
-        <option value="">-- اختر الولاية --</option>
-        <option value="Tunis">Tunis</option>
-        <option value="Ariana">Ariana</option>
-        <option value="Ben Arous">Ben Arous</option>
-        <option value="Sousse">Sousse</option>
-        <option value="Sfax">Sfax</option>
-      </select>
+    <iframe src="https://geo.tunisietelecom.tn/mytaghtia/"></iframe>
+  </div>
 
-      <select id="delegation" onchange="verifier()">
-        <option value="">-- اختر المعتمدية --</option>
-      </select>
+  <!-- COVERAGE INFO -->
+  <div class="info">
+    <p id="coverageMsg">
+      الرجاء اختيار موقع من الخريطة لعرض معلومات التغطية.
+    </p>
+  </div>
 
-      <button class="location-btn" onclick="getLocation()">📍 حدد موقعي</button>
-    </div>
-
-    <iframe id="ttFrame" src="https://geo.tunisietelecom.tn/mytaghtia/"></iframe>
+  <!-- TOOLTIP -->
+  <div class="tooltip">❓
+    <span>
+    <p> Dans le cadre de ma formation universitaire en Développement des Systèmes d’Information (DSI), j’ai effectué un stage de perfectionnement d’une durée d’un mois au sein de l’entreprise Tunisie Télécom.
+Ce stage avait pour objectif de me permettre de découvrir le milieu professionnel et de mettre en pratique les connaissances théoriques acquises durant mon parcours universitaire. Durant cette période, j’ai participé au développement d’un projet informatique lié aux services de Tunisie Télécom, portant principalement sur la consultation de la couverture réseau à travers une application web interactive.
+Le projet réalisé consiste à concevoir une plateforme permettant à l’utilisateur de vérifier la disponibilité de la couverture réseau selon sa position géographique, en s’appuyant sur les technologies de cartographie et les données du système d’information géographique (SIG). Ce projet m’a permis de mieux comprendre l’importance des systèmes d’information dans la gestion des réseaux de télécommunications et l’amélioration des services offerts aux clients.</p>
+    </span>
   </div>
 
 </div>
 
-<!-- زر Retour أسفل اليسار -->
-<button class="retour" onclick="retour()">⬅️ Retour</button>
-
+<button class="retour" onclick="window.location.href='index.html'">⬅️ Retour</button>
 <script>
-// المعتمديات لكل ولاية
-const delegations = {
-  "Tunis": ["Carthage", "La Marsa", "Le Bardo", "Centre Ville"],
-  "Ariana": ["Ariana Ville", "Raoued", "La Soukra"],
-  "Ben Arous": ["Ben Arous", "Ezzahra", "Rades"],
-  "Sousse": ["Sousse Ville", "Hammam Sousse"],
-  "Sfax": ["Sfax Ville", "Sakiet Ezzit"]
-};
+/* SLIDER */
+let slides=document.querySelectorAll('.slide');
+let i=0;
+setInterval(()=>{
+  slides[i].classList.remove('active');
+  i=(i+1)%slides.length;
+  slides[i].classList.add('active');
+},3000);
 
-// روابط iframe جاهزة لكل ولاية + معتمدية
-const mapsLinks = {
-  "Tunis": {
-    "Carthage":"https://geo.tunisietelecom.tn/mytaghtia/?search=Carthage+Tunis",
-    "La Marsa":"https://geo.tunisietelecom.tn/mytaghtia/?search=La+Marsa+Tunis",
-    "Le Bardo":"https://geo.tunisietelecom.tn/mytaghtia/?search=Le+Bardo+Tunis",
-    "Centre Ville":"https://geo.tunisietelecom.tn/mytaghtia/?search=Centre+Ville+Tunis"
+/* LOCATION BASED COVERAGE */
+if(navigator.geolocation){
+  navigator.geolocation.getCurrentPosition(pos=>{
+    let lat = pos.coords.latitude;
+    let lng = pos.coords.longitude;
+    let msg = "";
+
+    document.getElementById("coverageMsg").innerText = msg;
   },
-  "Ariana":{
-    "Ariana Ville":"https://geo.tunisietelecom.tn/mytaghtia/?search=Ariana+Ville+Ariana",
-    "Raoued":"https://geo.tunisietelecom.tn/mytaghtia/?search=Raoued+Ariana",
-    "La Soukra":"https://geo.tunisietelecom.tn/mytaghtia/?search=La+Soukra+Ariana"
-  },
-  "Ben Arous":{
-    "Ben Arous":"https://geo.tunisietelecom.tn/mytaghtia/?search=Ben+Arous+Ben+Arous",
-    "Ezzahra":"https://geo.tunisietelecom.tn/mytaghtia/?search=Ezzahra+Ben+Arous",
-    "Rades":"https://geo.tunisietelecom.tn/mytaghtia/?search=Rades+Ben+Arous"
-  },
-  "Sousse":{
-    "Sousse Ville":"https://geo.tunisietelecom.tn/mytaghtia/?search=Sousse+Ville+Sousse",
-    "Hammam Sousse":"https://geo.tunisietelecom.tn/mytaghtia/?search=Hammam+Sousse+Sousse"
-  },
-  "Sfax":{
-    "Sfax Ville":"https://geo.tunisietelecom.tn/mytaghtia/?search=Sfax+Ville+Sfax",
-    "Sakiet Ezzit":"https://geo.tunisietelecom.tn/mytaghtia/?search=Sakiet+Ezzit+Sfax"
-  }
-};
-
-function updateDelegations(){
-  const gov = document.getElementById("gouvernorat").value;
-  const delSelect = document.getElementById("delegation");
-  delSelect.innerHTML = '<option value="">-- اختر المعتمدية --</option>';
-  if(delegations[gov]){
-    delegations[gov].forEach(d=>{
-      const opt = document.createElement("option");
-      opt.value=d;
-      opt.textContent=d;
-      delSelect.appendChild(opt);
-    });
-  }
-}
-
-function verifier(){
-  const gov = document.getElementById("gouvernorat").value;
-  const del = document.getElementById("delegation").value;
-  if(!gov||!del) return;
-  const url = mapsLinks[gov][del];
-  if(url) document.getElementById("ttFrame").src=url;
-  else alert("لا يوجد رابط جاهز لهذه المعتمدية.");
-}
-
-// تحديد الموقع الجغرافي وعرض التغطية الخاصة بالموقع
-function getLocation(){
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(position){
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-      const url = `https://geo.tunisietelecom.tn/mytaghtia/?lat=${lat}&lng=${lng}`;
-      document.getElementById("ttFrame").src=url;
-    }, function(error){
-      alert("تعذر تحديد موقعك.");
-    });
-  }else{
-    alert("المتصفح لا يدعم تحديد الموقع.");
-  }
-}
-
-// زر Retour يرجع للصفحة الأولى
-function retour(){
-  window.location.href="index.html"; // ضع رابط الصفحة الأولى هنا
+  ()=>{
+    document.getElementById("coverageMsg").innerText =
+      "⚠️ لم يتم تحديد الموقع. الرجاء السماح بالوصول للموقع.";
+  });
+}else{
+  document.getElementById("coverageMsg").innerText =
+    "❌ المتصفح لا يدعم تحديد الموقع.";
 }
 </script>
 
