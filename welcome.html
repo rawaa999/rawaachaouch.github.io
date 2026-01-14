@@ -10,8 +10,8 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:
-    url('images (1).jpg') left center no-repeat,
-    url('images4.jpg') right center no-repeat;
+    url('images (3).jpg') left center no-repeat,
+    url('téléchargement2.jpg') right center no-repeat;
   background-size:25% 100%,25% 100%;
 }
 
@@ -26,13 +26,32 @@ body{
   position:relative;
 }
 
+/* LANGUAGE BUTTONS */
+.lang-switch{
+  text-align:center;
+  margin-bottom:10px;
+}
+.lang-switch button{
+  background:#3498db;
+  color:white;
+  border:none;
+  padding:6px 12px;
+  margin:0 5px;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:14px;
+}
+.lang-switch button:hover{
+  background:#217dbb;
+}
+
 /* SLIDER */
 .slider{
   position:relative;
-  height:180px;
+  height:240px;
   overflow:hidden;
   border-radius:15px;
-  margin-bottom:10px;
+  margin-bottom:15px;
 }
 .slide{
   position:absolute;
@@ -44,47 +63,37 @@ body{
 .slide img{
   width:100%;
   height:100%;
-  object-fit:contain; /* الصور تظهر كاملة */
+  object-fit:contain;
   background-color:#fff;
+  transform:scale(1.15);
 }
-.slide.active{
-  opacity:1;
-}
+.slide.active{ opacity:1; }
 
-/* الأسهم داخل السلايدر */
+/* ARROWS */
 .slider button.prev,
 .slider button.next{
   position:absolute;
   top:50%;
   transform:translateY(-50%);
-  background:rgba(52,152,219,0.7);
+  background:rgba(0,0,0,0.45);
   color:white;
   border:none;
-  padding:10px 15px;
+  width:40px;
+  height:40px;
   border-radius:50%;
   cursor:pointer;
-  font-size:18px;
-  z-index:10;
+  font-size:26px;
+  font-weight:bold;
 }
-
-.slider button.prev{
-  left:10px;
-}
-
-.slider button.next{
-  right:10px;
-}
-
-.slider button.prev:hover,
-.slider button.next:hover{
-  background:rgba(52,152,219,1);
-}
+.slider button.prev{ left:10px; }
+.slider button.next{ right:10px; }
 
 /* TEXT */
 .welcome{
   text-align:center;
   color:#555;
   margin-bottom:20px;
+  font-size:16px;
 }
 
 /* MAP */
@@ -124,16 +133,14 @@ iframe{
   visibility:hidden;
   background:#090907;
   color:#f4f4f4;
-  padding:10px;
+  padding:12px;
   border-radius:10px;
   width:600px;
   position:absolute;
   right:0;
   bottom:130%;
 }
-.tooltip:hover span{
-  visibility:visible;
-}
+.tooltip:hover span{ visibility:visible; }
 
 /* RETOUR */
 .retour{
@@ -154,20 +161,25 @@ iframe{
 
 <div class="container">
 
+  <!-- LANGUAGE SWITCH -->
+  <div class="lang-switch">
+    <button onclick="setLanguage('ar')">🇹🇳 عربي</button>
+    <button onclick="setLanguage('fr')">🇫🇷 Français</button>
+    <button onclick="setLanguage('en')">🇬🇧 English</button>
+  </div>
+
   <!-- SLIDER -->
   <div class="slider" id="slider">
     <div class="slide active"><img src="WhatsApp Image 11.jpeg"></div>
     <div class="slide"><img src="WhatsApp Image 22.jpeg"></div>
     <div class="slide"><img src="WhatsApp Image 33.jpeg"></div>
 
-    <!-- الأسهم داخل السلايدر -->
-    <button class="prev" onclick="prevSlide()">⏮</button>
-    <button class="next" onclick="nextSlide()">⏭</button>
+    <button class="prev" onclick="prevSlide()">‹</button>
+    <button class="next" onclick="nextSlide()">›</button>
   </div>
 
-  <p class="welcome">
-    اختار الموقع متاعك من الخريطة و اطّلع على جودة التغطية المتوفرة في المكان.
-  </p>
+  <!-- TEXT -->
+  <p class="welcome" id="welcomeText"></p>
 
   <!-- MAP -->
   <div class="map-box">
@@ -176,21 +188,12 @@ iframe{
 
   <!-- INFO -->
   <div class="info">
-    <p id="coverageMsg">
-      الرجاء اختيار موقع من الخريطة لعرض معلومات التغطية.
-    </p>
+    <p id="coverageMsg"></p>
   </div>
 
   <!-- TOOLTIP -->
   <div class="tooltip">❓
-    <span>
-      <p>
-      Dans le cadre de ma formation universitaire en Développement des Systèmes d’Information (DSI), j’ai effectué un stage de perfectionnement d’une durée d’un mois au sein de l’entreprise Tunisie Télécom.
-      Ce stage avait pour objectif de me permettre de découvrir le milieu professionnel et de mettre en pratique les connaissances théoriques acquises durant mon parcours universitaire.
-      Durant cette période, j’ai participé au développement d’un projet informatique lié aux services de Tunisie Télécom, portant principalement sur la consultation de la couverture réseau à travers une application web interactive.
-      Le projet réalisé consiste à concevoir une plateforme permettant à l’utilisateur de vérifier la disponibilité de la couverture réseau selon sa position géographique, en s’appuyant sur les technologies de cartographie et les données du système d’information géographique (SIG).
-      </p>
-    </span>
+    <span id="tooltipText"></span>
   </div>
 
 </div>
@@ -199,56 +202,44 @@ iframe{
 
 <script>
 /* SLIDER */
-let slides = document.querySelectorAll('.slide');
-let slider = document.getElementById('slider');
-let i = 0;
-let sliderInterval;
+let slides=document.querySelectorAll('.slide');
+let i=0, sliderInterval;
 
 function showSlide(index){
-  slides.forEach(slide => slide.classList.remove('active'));
+  slides.forEach(s=>s.classList.remove('active'));
   slides[index].classList.add('active');
 }
+function nextSlide(){ i=(i+1)%slides.length; showSlide(i); }
+function prevSlide(){ i=(i-1+slides.length)%slides.length; showSlide(i); }
+sliderInterval=setInterval(nextSlide,3000);
 
-function nextSlide(){
-  i = (i + 1) % slides.length;
-  showSlide(i);
+/* TRANSLATIONS */
+const translations={
+  ar:{
+    welcome:"اختار الموقع من الخريطة و اطّلع على جودة التغطية المتوفرة في المكان.",
+    coverage:"الرجاء اختيار موقع من الخريطة لعرض معلومات التغطية.",
+    tooltip:"في إطار التكوين الجامعي في تطوير نظم المعلومات، تم إنجاز هذا المشروع خلال تربص بشركة اتصالات تونس، ويهدف إلى تمكين المستخدم من الاطلاع على جودة التغطية حسب موقعه الجغرافي."
+  },
+  fr:{
+    welcome:"Choisissez votre position sur la carte et consultez la qualité de la couverture disponible.",
+    coverage:"Veuillez sélectionner un emplacement sur la carte pour afficher les informations de couverture.",
+    tooltip:"Dans le cadre de ma formation universitaire en Développement des Systèmes d’Information, ce projet a été réalisé lors d’un stage chez Tunisie Télécom afin de consulter la couverture réseau."
+  },
+  en:{
+    welcome:"Select your location on the map and check the available network coverage.",
+    coverage:"Please select a location on the map to view coverage information.",
+    tooltip:"As part of my university training in Information Systems Development, this project was carried out during an internship at Tunisie Telecom to check network coverage by location."
+  }
+};
+
+function setLanguage(lang){
+  document.getElementById("welcomeText").innerText=translations[lang].welcome;
+  document.getElementById("coverageMsg").innerText=translations[lang].coverage;
+  document.getElementById("tooltipText").innerText=translations[lang].tooltip;
 }
 
-function prevSlide(){
-  i = (i - 1 + slides.length) % slides.length;
-  showSlide(i);
-}
-
-function startSlider(){
-  sliderInterval = setInterval(nextSlide,3000);
-}
-
-function stopSlider(){
-  clearInterval(sliderInterval);
-}
-
-/* تشغيل تلقائي */
-startSlider();
-
-/* إيقاف عند hover */
-slider.addEventListener("mouseenter", stopSlider);
-slider.addEventListener("mouseleave", startSlider);
-
-/* LOCATION (كما هو) */
-if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(
-    ()=>{
-      document.getElementById("coverageMsg").innerText = "";
-    },
-    ()=>{
-      document.getElementById("coverageMsg").innerText =
-        "⚠️ لم يتم تحديد الموقع. الرجاء السماح بالوصول للموقع.";
-    }
-  );
-}else{
-  document.getElementById("coverageMsg").innerText =
-    "❌ المتصفح لا يدعم تحديد الموقع.";
-}
+/* DEFAULT LANGUAGE */
+setLanguage("ar");
 </script>
 
 </body>
