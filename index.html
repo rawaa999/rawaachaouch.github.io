@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <title>Accueil</title>
     <style>
-        body {
-            font-family: "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, #a5a195, #e2eced);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+       body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
         img{
             height:60px;
             width:70px;
-        }
-        .logo{
-            height: 60px;
-            width: 70px;
-            float:right;
         }
 
         .box {
@@ -28,7 +23,10 @@
             padding: 50px;
             border-radius: 20px;
             width: 700px;
-            height:650px;
+            height:750px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2)
         }
 
         h2 {
@@ -52,6 +50,7 @@
             font-weight: bold;
             color: #555;
         }
+
         button {
             padding: 15px 30px;
             border: none;
@@ -63,10 +62,27 @@
             transition: 0.3s;
             display: block;
             margin: 20px auto 0 auto;
+            margin-top: auto;
         }
 
         button:hover {
             background-color: #2980b9;
+        }
+
+        .logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-box {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .logo-box div:first-child {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -74,8 +90,23 @@
 
     <div class="box">
         <h2>Projet de stage de perfectionnement</h2>
-        <img src="images.jpg" alt="Logo ISET Kebili">
-        <img src="TT.jpg" alt="Logo Tunisie Telecom" class="logo">
+
+        <div class="logos">
+            <!-- Logo ISET -->
+            <div class="logo-box">
+                <div>étudiante en</div>
+                <img src="images.jpg" alt="Logo ISET Kebili">
+                <div>Kebelli</div>
+            </div>
+
+            <!-- Logo Tunisie Telecom -->
+            <div class="logo-box">
+                <div>au sein de</div>
+                <img src="TT.jpg" alt="Logo Tunisie Telecom">
+                <div>de mahdia</div>
+            </div>
+        </div>
+
         <table>
             <tr>
                 <td>Nom</td>
@@ -98,15 +129,13 @@
                 <td>2025 / 2026</td>
             </tr>
             <tr>
-                <td>période de stage:</td>
+                <td>Période de stage :</td>
                 <td>de 01/01/2026 au 31/01/2026</td>
             </tr>
         </table>
+
         <button onclick="location.href='welcome.html'">acceder au projet</button>
-
-
     </div>
 
 </body>
 </html>
-
