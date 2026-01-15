@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>خدمة التغطية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<a href="locator.html" id="agence-btn">📍 أقرب وكالة</a>
 <style>
 body{
   margin:0;
@@ -153,6 +153,26 @@ iframe{
   padding:12px 20px;
   border-radius:50px;
   cursor:pointer;
+}
+#agence-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;          /* 👈 على اليمين */
+  background: #00a6a6;
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  z-index: 9999;
+  transition: all 0.2s ease;
+}
+
+#agence-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
 }
 </style>
 </head>
