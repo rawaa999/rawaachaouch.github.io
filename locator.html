@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>أقرب وكالة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Leaflet -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<style>
+body{
+  margin:0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  min-height:100vh;
+  background: url('images55.jpg') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Overlay خفيف */
+.overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.45);
+}
+
+/* CARD */
+.card{
+  position:relative;
+  z-index:1;
+  width:90%;
+  max-width:1100px;
+  background:rgba(255,255,255,0.95);
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* HEADER */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.header h2{
+  margin:0;
+  color:#1f2d3d;
+}
+
+.header span{
+  color:#555;
+  font-size:14px;
+}
+
+/* INFO */
+.info{
+  background:#f1f7ff;
+  border-left:5px solid #1e88e5;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  line-height:1.6;
+}
+
+/* MAP */
+#map{
+  height:420px;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+/* RETOUR */
+.retour{
+  position:fixed;
+  bottom:25px;
+  left:25px;
+  background:#1e88e5;
+  color:white;
+  border:none;
+  padding:12px 22px;
+  border-radius:30px;
+  cursor:pointer;
+  font-size:15px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+.retour:hover{
+  background:#1565c0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="card">
+
+  <div class="header">
+    <h2>📍 أقرب وكالة Tunisie Télécom</h2>
+    <span>Service de localisation</span>
+  </div>
+
+  <div class="info" id="info">
+    جاري تحديد موقعك وحساب أقرب وكالة متوفرة...
+  </div>
+
+  <div id="map"></div>
+
+</div>
+
+<button class="retour" onclick="window.location.href='index.html'">
+⬅️ رجوع
+</button>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/locator.js"></script>
+
+</body>
+</html>

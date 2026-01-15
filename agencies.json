@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Tunisie Télécom – Agence Tunis Centre",
+    "lat": 36.8008,
+    "lng": 10.1817,
+    "address": "Rue Hédi Nouira, Tunis",
+    "phone": "71 123 456"
+  },
+  {
+    "name": "Tunisie Télécom – Agence Ariana",
+    "lat": 36.8665,
+    "lng": 10.1647,
+    "address": "Centre Ariana",
+    "phone": "71 654 321"
+  },
+  {
+    "name": "Tunisie Télécom – Agence Sfax",
+    "lat": 34.7406,
+    "lng": 10.7603,
+    "address": "Avenue 5 Août, Sfax",
+    "phone": "74 222 333"
+  }
+]
