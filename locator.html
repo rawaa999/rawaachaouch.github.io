@@ -1,126 +1,236 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>أقرب وكالة</title>
+<title>Agence la plus proche – Tunisie Télécom</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Leaflet -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
 body{
   margin:0;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  font-family:Arial, sans-serif;
+  background:url("images55.jpg") center/cover no-repeat fixed;
+}
+
+/* overlay */
+.overlay{
+  background:rgba(0,0,0,0.55);
   min-height:100vh;
-  background: url('images55.jpg') center/cover no-repeat;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-/* Overlay خفيف */
-.overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.45);
-}
-
-/* CARD */
-.card{
-  position:relative;
-  z-index:1;
+/* container */
+.container{
   width:90%;
-  max-width:1100px;
+  max-width:1000px;
   background:rgba(255,255,255,0.95);
   border-radius:20px;
   padding:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+  animation: fadeSlideUp 0.8s ease forwards;
 }
 
-/* HEADER */
-.header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+h2{
+  text-align:center;
+  color:#0a3d62;
+  margin-bottom:10px;
+}
+
+p{
+  text-align:center;
+  color:#555;
   margin-bottom:15px;
 }
 
-.header h2{
-  margin:0;
-  color:#1f2d3d;
+/* language bar */
+.lang-bar{
+  position: relative;
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:10px;
 }
 
-.header span{
-  color:#555;
+/* main language button */
+.lang-btn{
+  background:#0a3d62;
+  color:white;
+  border:none;
+  padding:6px 16px;
+  border-radius:20px;
+  cursor:pointer;
+  font-weight:bold;
   font-size:14px;
 }
 
-/* INFO */
-.info{
-  background:#f1f7ff;
-  border-left:5px solid #1e88e5;
-  padding:15px;
-  border-radius:10px;
-  margin-bottom:15px;
-  line-height:1.6;
+/* dropdown */
+.lang-menu{
+  position:absolute;
+  top:40px;
+  right:0;
+  background:white;
+  border-radius:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+  display:none;
+  overflow:hidden;
+  animation: fadeIn 0.3s ease;
+  z-index:100;
 }
 
-/* MAP */
+.lang-menu button{
+  width:100%;
+  background:none;
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
+  font-size:14px;
+  text-align:left;
+}
+
+.lang-menu button:hover{
+  background:#f1f1f1;
+}
+
+/* map */
 #map{
   height:420px;
   border-radius:15px;
   overflow:hidden;
+  animation: zoomIn 0.8s ease forwards;
 }
 
-/* RETOUR */
+/* retour */
 .retour{
   position:fixed;
-  bottom:25px;
-  left:25px;
-  background:#1e88e5;
+  bottom:20px;
+  left:20px;
+  background:#e74c3c;
   color:white;
   border:none;
-  padding:12px 22px;
-  border-radius:30px;
+  padding:12px 20px;
+  border-radius:50px;
   cursor:pointer;
   font-size:15px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
-.retour:hover{
-  background:#1565c0;
+
+/* animations */
+@keyframes fadeSlideUp{
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+@keyframes zoomIn{
+  from{opacity:0; transform:scale(0.97);}
+  to{opacity:1; transform:scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
+<div class="overlay">
+  <div class="container">
 
-<div class="card">
+    <h2 id="title">Agence Tunisie Télécom la plus proche</h2>
+    <p id="description">
+      Cette page permet d’identifier automatiquement  
+      l’agence Tunisie Télécom la plus proche de vous.
+    </p>
 
-  <div class="header">
-    <h2>📍 أقرب وكالة Tunisie Télécom</h2>
-    <span>Service de localisation</span>
+    <!-- Language selector -->
+    <div class="lang-bar">
+      <button class="lang-btn" id="currentLang" onclick="toggleLangMenu()">
+        🌐 Français
+      </button>
+
+      <div class="lang-menu" id="langMenu">
+        <button onclick="setLanguage('ar')">العربية</button>
+        <button onclick="setLanguage('fr')">Français</button>
+        <button onclick="setLanguage('en')">English</button>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map"></div>
+
   </div>
-
-  <div class="info" id="info">
-    جاري تحديد موقعك وحساب أقرب وكالة متوفرة...
-  </div>
-
-  <div id="map"></div>
-
 </div>
 
-<button class="retour" onclick="window.location.href='index.html'">
-⬅️ رجوع
+<button class="retour" onclick="window.location.href='coverage.html'">
+  ⬅ Retour
 </button>
 
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Locator JS -->
 <script src="js/locator.js"></script>
+
+<!-- Language JS -->
+<script>
+function toggleLangMenu(){
+  const menu = document.getElementById("langMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function setLanguage(lang){
+  const title = document.getElementById("title");
+  const description = document.getElementById("description");
+  const currentLang = document.getElementById("currentLang");
+  const menu = document.getElementById("langMenu");
+
+  menu.style.display = "none";
+
+  title.style.opacity = 0;
+  description.style.opacity = 0;
+
+  setTimeout(() => {
+    if(lang === 'ar'){
+      document.documentElement.lang = 'ar';
+      document.documentElement.dir = 'rtl';
+      title.innerText = "أقرب وكالة اتصالات تونس";
+      description.innerText = "تساعدك هذه الصفحة على معرفة أقرب وكالة اتصالات تونس إليك تلقائيًا.";
+      currentLang.innerText = "🌐 العربية";
+    }
+
+    if(lang === 'fr'){
+      document.documentElement.lang = 'fr';
+      document.documentElement.dir = 'ltr';
+      title.innerText = "Agence Tunisie Télécom la plus proche";
+      description.innerText = "Cette page permet d’identifier automatiquement l’agence Tunisie Télécom la plus proche de vous.";
+      currentLang.innerText = "🌐 Français";
+    }
+
+    if(lang === 'en'){
+      document.documentElement.lang = 'en';
+      document.documentElement.dir = 'ltr';
+      title.innerText = "Nearest Tunisie Télécom Agency";
+      description.innerText = "This page automatically identifies the nearest Tunisie Télécom agency to you.";
+      currentLang.innerText = "🌐 English";
+    }
+
+    title.style.opacity = 1;
+    description.style.opacity = 1;
+  }, 200);
+}
+
+/* close menu when clicking outside */
+document.addEventListener("click", function(e){
+  const bar = document.querySelector(".lang-bar");
+  if(!bar.contains(e.target)){
+    document.getElementById("langMenu").style.display = "none";
+  }
+});
+</script>
 
 </body>
 </html>
