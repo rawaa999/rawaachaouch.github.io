@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>خدمة التغطية</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<a href="locator.html" id="agence-btn">📍 أقرب وكالة</a>
+<a href="locator.html" id="agence-btn"></a>
 <style>
 body{
   margin:0;
@@ -238,17 +238,20 @@ const translations={
   ar:{
     welcome:"اختار الموقع من الخريطة و اطّلع على جودة التغطية المتوفرة في المكان.",
     coverage:"الرجاء اختيار موقع من الخريطة لعرض معلومات التغطية.",
-    tooltip:"في إطار التكوين الجامعي في تطوير نظم المعلومات، تم إنجاز هذا المشروع خلال تربص بشركة اتصالات تونس، ويهدف إلى تمكين المستخدم من الاطلاع على جودة التغطية حسب موقعه الجغرافي."
+    tooltip:"في إطار التكوين الجامعي...",
+    agence:"📍 أقرب وكالة"
   },
   fr:{
-    welcome:"Choisissez votre position sur la carte et consultez la qualité de la couverture disponible.",
-    coverage:"Veuillez sélectionner un emplacement sur la carte pour afficher les informations de couverture.",
-    tooltip:"Dans le cadre de ma formation universitaire en Développement des Systèmes d’Information, ce projet a été réalisé lors d’un stage chez Tunisie Télécom afin de consulter la couverture réseau."
+    welcome:"Choisissez votre position sur la carte...",
+    coverage:"Veuillez sélectionner un emplacement...",
+    tooltip:"Dans le cadre de ma formation...",
+    agence:"📍 Agence la plus proche"
   },
   en:{
-    welcome:"Select your location on the map and check the available network coverage.",
-    coverage:"Please select a location on the map to view coverage information.",
-    tooltip:"As part of my university training in Information Systems Development, this project was carried out during an internship at Tunisie Telecom to check network coverage by location."
+    welcome:"Select your location on the map...",
+    coverage:"Please select a location...",
+    tooltip:"As part of my university training...",
+    agence:"📍 Nearest Agency"
   }
 };
 
@@ -256,6 +259,7 @@ function setLanguage(lang){
   document.getElementById("welcomeText").innerText=translations[lang].welcome;
   document.getElementById("coverageMsg").innerText=translations[lang].coverage;
   document.getElementById("tooltipText").innerText=translations[lang].tooltip;
+  document.getElementById("agence-btn").innerText=translations[lang].agence;
 }
 
 /* DEFAULT LANGUAGE */
